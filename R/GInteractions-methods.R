@@ -357,7 +357,10 @@ setMethod("duplicated", "GInteractions", function(x, incomparables=FALSE, fromLa
     return(is.dup)
 })
 
-setMethod("as.data.frame", "GInteractions", function (x, row.names=NULL, optional=FALSE, ...) {
+# S3/S4 combo: base::as.data.frame(), and so data.frame() or tibble::as_tibble(),
+# dispatch on S3 methods only. Since S4Vectors 0.51.10, as.data.frame.Vector()
+# no longer sends them on to the S4 method below, and fails on GInteractions.
+as.data.frame.GInteractions <- function (x, row.names=NULL, optional=FALSE, ...) {
     all1 <- anchors(x, type="first", id=TRUE)
     all2 <- anchors(x, type="second", id=TRUE)
     used <- logical(length(regions(x)))
@@ -372,7 +375,9 @@ setMethod("as.data.frame", "GInteractions", function (x, row.names=NULL, optiona
     colnames(a2.dframe) <- paste0(colnames(a2.dframe), "2")
     if (missing(row.names)) { row.names <- names(x) }
     data.frame(a1.dframe, a2.dframe, mcols(x), row.names=row.names)
-})
+}
+
+setMethod("as.data.frame", "GInteractions", as.data.frame.GInteractions)
 
 ###############################################################
 # End

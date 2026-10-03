@@ -446,6 +446,13 @@ test_that("data.frame coercions of GI objects works", {
     empty <- as.data.frame(x[0,])
     expect_identical(colnames(empty), colnames(as.data.frame(x)))
     expect_identical(nrow(empty), 0L)
+
+    # S3 dispatch, as in data.frame() or tibble::as_tibble(), gives the same result.
+    expect_identical(base::as.data.frame(temp.x), as.data.frame(temp.x))
+    expect_identical(base::as.data.frame(x[0,]), empty)
+    strict.x <- as(temp.x, "StrictGInteractions")
+    expect_identical(base::as.data.frame(strict.x), as.data.frame(strict.x))
+    expect_identical(data.frame(temp.x), data.frame(as.data.frame(temp.x)))
 })
 
 test_that("environment generation works for GI objects", {

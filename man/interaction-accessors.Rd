@@ -61,6 +61,7 @@
 
 \alias{length,GInteractions-method}
 \alias{as.data.frame,GInteractions-method}
+\alias{as.data.frame.GInteractions}
 \alias{$,GInteractions-method}
 \alias{$<-,GInteractions-method}
 

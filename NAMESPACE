@@ -28,6 +28,9 @@ export(
     makeGInteractionsFromGRangesPairs
 )
 
+# S3 method, for base::as.data.frame() and its callers.
+S3method(as.data.frame, GInteractions)
+
 # Requires several imports.
 import(methods, BiocGenerics, S4Vectors, IRanges,
     Seqinfo, GenomicRanges, SummarizedExperiment)
